@@ -1,26 +1,24 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { collect, store } from 'react-recollect';
+import Task from './Task';
+debugger;
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
-
-export default App;
+const TaskList = () => (
+  <div>
+    {store.tasks.length ? store.tasks.map(task => (      
+      <Task key={task.id} task={task} />
+    )): null}
+    
+    <button onClick={() => {
+      store.tasks.push({
+        name: 'A new task',
+        done: false,
+        id: Math.random()
+      });
+    }}>
+      Add a task
+    </button>
+  </div>
+);
+ 
+export default collect(TaskList);
